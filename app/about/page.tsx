@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Heart, ListChecks, ShieldCheck, Sparkles, Vote } from "lucide-react";
+import { Code2, Heart, Lightbulb, ListChecks, ShieldCheck, Sparkles, Vote } from "lucide-react";
 import { getCurrentUser } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import type { Category } from "@/lib/types";
@@ -77,6 +77,28 @@ export default async function AboutPage() {
           <div>
             <h2 className="text-2xl font-bold text-ink">A fairer voting experience</h2>
             <p className="mt-3 max-w-3xl leading-7 text-ink-soft">The platform keeps voting organised, helping students take part clearly and fairly in each award category.</p>
+          </div>
+        </section>
+
+        <section className="rounded-3xl border border-primary-soft bg-surface p-6 shadow-sm sm:p-8">
+          <div className="max-w-2xl">
+            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-primary">Project attribution</p>
+            <h2 className="mt-2 text-2xl font-bold text-ink">The People Behind Mizero Awards</h2>
+            <p className="mt-2 leading-7 text-ink-soft">A school voting experience shaped by a shared vision and built for students.</p>
+          </div>
+          <div className="mt-6 grid gap-4 md:grid-cols-2">
+            <article className="rounded-2xl border border-primary-soft bg-mist/60 p-5">
+              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary text-white shadow-sm"><Lightbulb className="h-5 w-5" /></span>
+              <p className="mt-4 text-sm font-semibold uppercase tracking-wide text-primary">Created by</p>
+              <h3 className="mt-1 text-lg font-bold text-ink">Mizero Popular Kid</h3>
+              <p className="mt-2 text-sm leading-6 text-ink-soft">The vision and initiative behind the Mizero Awards voting experience.</p>
+            </article>
+            <article className="rounded-2xl border border-primary-soft bg-mist/60 p-5">
+              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-accent text-white shadow-sm"><Code2 className="h-5 w-5" /></span>
+              <p className="mt-4 text-sm font-semibold uppercase tracking-wide text-accent-dark">Developed by</p>
+              <h3 className="mt-1 text-lg font-bold text-ink">Chris Mugisha</h3>
+              <p className="mt-2 text-sm leading-6 text-ink-soft">Responsible for designing and building the digital voting platform.</p>
+            </article>
           </div>
         </section>
 
