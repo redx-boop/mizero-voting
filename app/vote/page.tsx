@@ -18,7 +18,11 @@ export const metadata: Metadata = { title: "Vote" };
 // The data is passed down to the client VoteSection component.
 // ============================================================================
 
-export default async function VotePage() {
+export default async function VotePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ category?: string }>;
+}) {
   // Redirects to /login when there is no session.
   const user = await requireUser();
   const supabase = await createClient();
@@ -65,6 +69,7 @@ export default async function VotePage() {
   // Map of the user's existing votes: categoryId → candidateId.
   const existingVotes: Record<string, string> = {};
   for (const vote of voteRows) existingVotes[vote.category_id] = vote.candidate_id;
+  const { category } = await searchParams;
 
   return (
     <VoteSection
@@ -72,6 +77,7 @@ export default async function VotePage() {
       candidatesByCategory={candidatesByCategory}
       existingVotes={existingVotes}
       status={status}
+      initialCategoryId={category}
     />
   );
 }

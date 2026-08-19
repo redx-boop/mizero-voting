@@ -9,7 +9,7 @@
 import { useState, type FormEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Loader2, LogIn } from "lucide-react";
+import { Loader2, LogIn, UserPlus } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 
 export default function LoginForm({
@@ -104,12 +104,21 @@ export default function LoginForm({
         {loading ? "Signing in…" : "Login"}
       </button>
 
-      <p className="text-center text-sm text-ink-soft">
-        No account yet?{" "}
-        <Link href="/register" className="font-semibold text-primary hover:underline">
+      <div className="flex items-center gap-3 rounded-2xl border border-accent/25 bg-gradient-to-br from-accent-soft to-surface p-4 shadow-sm">
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent text-white shadow-sm">
+          <UserPlus className="h-5 w-5" />
+        </span>
+        <div className="min-w-0 flex-1">
+          <p className="text-sm font-bold text-ink">No account yet?</p>
+          <p className="mt-0.5 text-xs text-ink-soft">Create one, then cast your vote.</p>
+        </div>
+        <Link
+          href="/register"
+          className="inline-flex min-h-10 shrink-0 items-center justify-center rounded-xl bg-accent px-4 text-sm font-bold text-white shadow-sm transition-all hover:-translate-y-0.5 hover:bg-accent-dark hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+        >
           Register
         </Link>
-      </p>
+      </div>
     </form>
   );
 }

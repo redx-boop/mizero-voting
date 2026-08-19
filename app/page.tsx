@@ -6,7 +6,6 @@ import {
   ListChecks,
   PartyPopper,
   Trophy,
-  Vote,
 } from "lucide-react";
 import { getCurrentUser } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
@@ -15,6 +14,7 @@ import type { Candidate, Category, Settings } from "@/lib/types";
 import CategoryCard from "@/components/CategoryCard";
 import Countdown from "@/components/Countdown";
 import StatusBadge from "@/components/StatusBadge";
+import VoteNowButton from "@/components/VoteNowButton";
 
 export const metadata = {
   title: "Mizero Awards 2026 — School Voting",
@@ -72,8 +72,6 @@ export default async function HomePage() {
         ? electionSettings.voting_end
         : null;
 
-  const ctaHref = user ? "/vote" : "/login?next=/vote";
-
   return (
     <div className="animate-fade-in">
       {/* ================= HERO ================= */}
@@ -110,13 +108,10 @@ export default async function HomePage() {
               )}
 
               <div className="mt-2 flex flex-col gap-3 sm:flex-row">
-                <Link
-                  href={ctaHref}
+                <VoteNowButton
+                  isAuthenticated={Boolean(user)}
                   className="inline-flex items-center justify-center gap-2 rounded-full bg-accent px-7 py-3.5 font-semibold text-white shadow-lg transition-all hover:bg-accent-dark hover:shadow-xl"
-                >
-                  <Vote className="h-5 w-5" />
-                  Start Voting
-                </Link>
+                />
                 <Link
                   href="/results"
                   className="inline-flex items-center justify-center gap-2 rounded-full bg-white/10 px-7 py-3.5 font-semibold text-white ring-1 ring-white/30 backdrop-blur transition-colors hover:bg-white/20"
@@ -163,11 +158,11 @@ export default async function HomePage() {
           ].map((step) => (
             <div
               key={step.title}
-              className="rounded-2xl border border-primary-soft bg-surface p-6 shadow-sm"
+              className="group rounded-3xl border border-primary-soft bg-surface p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5"
             >
-              <step.icon className="h-7 w-7 text-primary" />
-              <h3 className="mt-3 font-semibold text-ink">{step.title}</h3>
-              <p className="mt-1 text-sm text-ink-soft">{step.text}</p>
+              <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-soft text-primary transition-transform duration-300 group-hover:scale-105"><step.icon className="h-6 w-6" /></span>
+              <h3 className="mt-4 font-bold text-ink">{step.title}</h3>
+              <p className="mt-2 text-sm leading-6 text-ink-soft">{step.text}</p>
             </div>
           ))}
         </div>
@@ -182,12 +177,10 @@ export default async function HomePage() {
               Explore the awards and cast your vote for the night of nights.
             </p>
           </div>
-          <Link
-            href={ctaHref}
+          <VoteNowButton
+            isAuthenticated={Boolean(user)}
             className="inline-flex items-center gap-1.5 font-semibold text-primary hover:underline"
-          >
-            Start voting <ArrowRight className="h-4 w-4" />
-          </Link>
+          />
         </div>
 
         {activeCategories.length === 0 ? (
@@ -205,6 +198,7 @@ export default async function HomePage() {
                 key={category.id}
                 category={category}
                 candidateCount={countByCategory.get(category.id) ?? 0}
+                isAuthenticated={Boolean(user)}
               />
             ))}
           </div>

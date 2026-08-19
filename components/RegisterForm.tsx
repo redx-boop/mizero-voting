@@ -65,8 +65,8 @@ export default function RegisterForm({
       setLoading(false);
       return;
     }
-    if (form.password.length < 8) {
-      setError("Password must be at least 8 characters.");
+    if (form.password.length < 5) {
+      setError("Password must be at least 5 characters.");
       setLoading(false);
       return;
     }
@@ -209,12 +209,12 @@ export default function RegisterForm({
           id="password"
           type="password"
           required
-          minLength={8}
+          minLength={5}
           autoComplete="new-password"
           value={form.password}
           onChange={update("password")}
           className="w-full rounded-xl border border-primary-soft bg-surface px-4 py-2.5 text-ink outline-none transition-colors placeholder:text-ink-soft/60 focus:border-primary focus:ring-2 focus:ring-primary/20"
-          placeholder="At least 8 characters"
+          placeholder="At least 5 characters"
         />
       </div>
 
@@ -226,7 +226,7 @@ export default function RegisterForm({
           id="confirm_password"
           type="password"
           required
-          minLength={8}
+          minLength={5}
           autoComplete="new-password"
           value={form.confirm_password}
           onChange={update("confirm_password")}
@@ -248,12 +248,21 @@ export default function RegisterForm({
         {loading ? "Creating account…" : "Create account"}
       </button>
 
-      <p className="text-center text-sm text-ink-soft">
-        Already have an account?{" "}
-        <Link href="/login" className="font-semibold text-primary hover:underline">
+      <div className="flex items-center gap-3 rounded-2xl border border-primary/20 bg-gradient-to-br from-primary-soft to-surface p-4 shadow-sm">
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary text-white shadow-sm">
+          <UserPlus className="h-5 w-5" />
+        </span>
+        <div className="min-w-0 flex-1">
+          <p className="text-sm font-bold text-ink">Already have an account?</p>
+          <p className="mt-0.5 text-xs text-ink-soft">Welcome back — continue to your vote.</p>
+        </div>
+        <Link
+          href="/login"
+          className="inline-flex min-h-10 shrink-0 items-center justify-center rounded-xl bg-primary px-4 text-sm font-bold text-white shadow-sm transition-all hover:-translate-y-0.5 hover:bg-primary-dark hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+        >
           Login
         </Link>
-      </p>
+      </div>
     </form>
   );
 }

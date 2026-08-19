@@ -44,7 +44,9 @@ export default function ResultsChart({
   results: CategoryResultWithMeta[];
 }) {
   return (
-    <section className="rounded-2xl border border-primary-soft bg-surface p-5 shadow-sm sm:p-6">
+    <section className="overflow-hidden rounded-3xl border border-primary-soft bg-surface shadow-sm">
+      <div className="h-1.5 bg-gradient-to-r from-primary via-violet-500 to-accent" />
+      <div className="p-5 sm:p-6">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h2 className="text-lg font-bold text-ink">{categoryName}</h2>
         <span className="rounded-full bg-primary-soft px-3 py-1 text-xs font-semibold text-primary">
@@ -52,7 +54,7 @@ export default function ResultsChart({
         </span>
       </div>
 
-      <div className="mt-5 space-y-5">
+      <div className="mt-6 space-y-6">
         {results.map((result) => (
           <div key={result.candidate_id}>
             <div className="flex items-center gap-3">
@@ -77,7 +79,7 @@ export default function ResultsChart({
               </div>
             </div>
             {/* Progress bar width = percentage of votes in this category */}
-            <div className="mt-2 h-3 overflow-hidden rounded-full bg-mist">
+            <div className="mt-2.5 h-3 overflow-hidden rounded-full bg-mist ring-1 ring-primary/5">
               <div
                 className={cn(
                   "h-full rounded-full transition-all",
@@ -92,6 +94,7 @@ export default function ResultsChart({
             </div>
           </div>
         ))}
+      </div>
       </div>
     </section>
   );

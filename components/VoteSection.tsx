@@ -9,7 +9,7 @@
 // validated INSERT.
 // ============================================================================
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -40,12 +40,15 @@ export default function VoteSection({
   candidatesByCategory,
   existingVotes,
   status,
+  initialCategoryId,
 }: {
   categories: Category[];
   candidatesByCategory: Record<string, Candidate[]>;
   /** categoryId → candidateId of votes this student already cast. */
   existingVotes: Record<string, string>;
   status: ElectionStatus;
+  /** Homepage category target, used only to bring the selected section into view. */
+  initialCategoryId?: string;
 }) {
   const router = useRouter();
   const [selections, setSelections] = useState<Record<string, string>>({});
@@ -65,6 +68,14 @@ export default function VoteSection({
     (c) => getCategoryStatus(c, status, now) === "active"
   );
   const selectedCount = Object.keys(selections).length;
+
+  useEffect(() => {
+    if (!initialCategoryId) return;
+    document.getElementById(`category-${initialCategoryId}`)?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  }, [initialCategoryId]);
 
   function toggleSelection(categoryId: string, candidateId: string) {
     setSelections((prev) => {
@@ -184,7 +195,8 @@ export default function VoteSection({
             return (
               <section
                 key={category.id}
-                className="rounded-2xl border border-primary-soft bg-surface p-5 shadow-sm sm:p-6"
+                id={`category-${category.id}`}
+                className="overflow-hidden rounded-3xl border border-primary-soft bg-surface p-5 shadow-sm sm:p-6"
               >
                 <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
                   <div className="flex items-center gap-3">

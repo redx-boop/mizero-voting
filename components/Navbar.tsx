@@ -21,6 +21,7 @@ import { cn } from "@/lib/utils";
 const NAV_LINKS = [
   { href: "/", label: "Home" },
   { href: "/vote", label: "Vote" },
+  { href: "/about", label: "About" },
   { href: "/results", label: "Results" },
   { href: "/winners", label: "Winners" },
 ];
