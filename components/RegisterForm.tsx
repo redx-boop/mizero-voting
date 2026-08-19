@@ -168,7 +168,7 @@ export default function RegisterForm({
           value={form.full_name}
           onChange={update("full_name")}
           className="w-full rounded-xl border border-primary-soft bg-surface px-4 py-2.5 text-ink outline-none transition-colors placeholder:text-ink-soft/60 focus:border-primary focus:ring-2 focus:ring-primary/20"
-          placeholder="Chrispin Mugisha"
+          placeholder="John Doe"
         />
       </div>
 

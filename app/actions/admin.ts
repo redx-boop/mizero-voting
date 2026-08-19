@@ -36,6 +36,17 @@ function cleanText(value: string | undefined, max: number): string {
   return (value ?? "").trim().slice(0, max);
 }
 
+function cleanImageUrl(value: string | null | undefined): string | null {
+  const url = cleanText(value ?? "", 2048);
+  if (!url) return null;
+  try {
+    const parsed = new URL(url);
+    return parsed.protocol === "https:" ? parsed.toString() : null;
+  } catch {
+    return null;
+  }
+}
+
 /** Pick a slug that is not already used by another category. */
 async function uniqueSlug(base: string): Promise<string> {
   const supabase = await createClient();
@@ -60,6 +71,7 @@ export async function createCategory(input: {
   name: string;
   description?: string;
   icon?: string;
+  image_url?: string | null;
   voting_start?: string | null;
   voting_end?: string | null;
 }): Promise<AdminResult> {
@@ -75,6 +87,7 @@ export async function createCategory(input: {
     slug: await uniqueSlug(slugify(name)),
     description: cleanText(input.description, 300) || null,
     icon: cleanText(input.icon, 12) || "🏆",
+    image_url: cleanImageUrl(input.image_url),
     voting_start: input.voting_start || null,
     voting_end: input.voting_end || null,
   });
@@ -90,6 +103,7 @@ export async function updateCategory(
     name: string;
     description?: string;
     icon?: string;
+    image_url?: string | null;
     voting_start?: string | null;
     voting_end?: string | null;
   }
@@ -107,6 +121,7 @@ export async function updateCategory(
       name,
       description: cleanText(input.description, 300) || null,
       icon: cleanText(input.icon, 12) || "🏆",
+      image_url: cleanImageUrl(input.image_url),
       voting_start: input.voting_start || null,
       voting_end: input.voting_end || null,
     })

@@ -1,4 +1,8 @@
+"use client";
+
 import Link from "next/link";
+import Image from "next/image";
+import { useState } from "react";
 import { ArrowRight } from "lucide-react";
 import type { Category } from "@/lib/types";
 
@@ -10,11 +14,17 @@ export default function CategoryCard({
   category: Category;
   candidateCount: number;
 }) {
+  const [imageFailed, setImageFailed] = useState(false);
+  const showImage = Boolean(category.image_url) && !imageFailed;
+
   return (
-    <Link
-      href="/vote"
-      className="group flex flex-col rounded-2xl border border-primary-soft bg-surface p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-md"
-    >
+    <Link href="/vote" className="group flex flex-col overflow-hidden rounded-2xl border border-primary-soft bg-surface shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-md">
+      {showImage && (
+        <div className="relative aspect-[16/7] w-full bg-primary-soft">
+          <Image src={category.image_url!} alt="" fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" className="object-cover" onError={() => setImageFailed(true)} />
+        </div>
+      )}
+      <div className="flex flex-1 flex-col p-5">
       <div className="flex items-start justify-between">
         <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary-soft text-2xl">
           {category.icon ?? "🏆"}
@@ -30,6 +40,7 @@ export default function CategoryCard({
       <p className="mt-3 text-xs font-medium text-primary">
         {candidateCount} candidate{candidateCount === 1 ? "" : "s"}
       </p>
+      </div>
     </Link>
   );
 }

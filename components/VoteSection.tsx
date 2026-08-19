@@ -11,6 +11,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import {
   CheckCircle2,
@@ -187,8 +188,12 @@ export default function VoteSection({
               >
                 <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
                   <div className="flex items-center gap-3">
-                    <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary-soft text-xl">
-                      {category.icon ?? "🏆"}
+                    <span className="relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-xl bg-primary-soft text-xl">
+                      {category.image_url ? (
+                        <Image src={category.image_url} alt="" fill sizes="44px" className="object-cover" />
+                      ) : (
+                        category.icon ?? "🏆"
+                      )}
                     </span>
                     <div>
                       <h2 className="text-lg font-bold text-ink">{category.name}</h2>
